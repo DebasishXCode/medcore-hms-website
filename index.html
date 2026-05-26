@@ -11,41 +11,48 @@
       theme: {
         extend: {
           colors: {
-            brand: {
-              DEFAULT: '#042B0B',
-              90: '#263F26',
-              80: '#3D553E',
-              60: '#6D7F6E',
-              20: '#CED5CE',
-              10: '#E7EAE7',
-            }
+            brand: { DEFAULT: '#042B0B', 90: '#263F26', 80: '#3D553E', 60: '#6D7F6E', 20: '#CED5CE', 10: '#E7EAE7' }
           },
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          animation: {
+            'fade-up': 'fadeUp 0.6s ease forwards',
+            'float': 'float 6s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeUp: { '0%': { opacity: '0', transform: 'translateY(24px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+            float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
           }
         }
       }
     }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     html { scroll-behavior: smooth; }
-    .gradient-hero { background: linear-gradient(135deg, #042B0B 0%, #1a4a21 60%, #2d6b35 100%); }
-    .card-hover { transition: transform 0.2s, box-shadow 0.2s; }
-    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(4,43,11,0.12); }
+    .hero-bg { background: radial-gradient(ellipse at 70% 50%, #1a4a21 0%, #042B0B 60%, #021505 100%); }
+    .glass { background: rgba(255,255,255,0.06); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.12); }
+    .card-hover { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+    .card-hover:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(4,43,11,0.15); }
+    .img-card { position: relative; overflow: hidden; }
+    .img-card img { transition: transform 0.5s ease; }
+    .img-card:hover img { transform: scale(1.05); }
+    .gradient-text { background: linear-gradient(135deg, #ffffff 0%, #86efac 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .section-fade { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .section-fade.visible { opacity: 1; transform: translateY(0); }
+    .browser-bar { background: #1e2a1e; border-radius: 12px 12px 0 0; padding: 10px 16px; display: flex; align-items: center; gap: 6px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
   </style>
 </head>
-<body class="font-sans text-brand antialiased">
+<body class="font-sans text-brand antialiased bg-white">
 
   <!-- Nav -->
-  <nav class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-brand-10">
+  <nav class="fixed top-0 inset-x-0 z-50 bg-white/95 backdrop-blur-md border-b border-brand-10 shadow-sm">
     <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
       <div class="flex items-center gap-2.5">
         <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-brand shrink-0">
           <svg viewBox="0 0 32 32" class="w-5 h-5" fill="none">
-            <polyline points="2,16 7,16 9,13 11,16 13,16 15,5 17,27 19,16 21,12 24,16 30,16"
-              stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="2,16 7,16 9,13 11,16 13,16 15,5 17,27 19,16 21,12 24,16 30,16" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
         <span class="text-base font-bold text-brand">MedCore</span>
@@ -53,186 +60,260 @@
       <div class="hidden md:flex items-center gap-8 text-sm font-medium text-brand-60">
         <a href="#features" class="hover:text-brand transition-colors">Features</a>
         <a href="#who" class="hover:text-brand transition-colors">Who it's for</a>
+        <a href="#how" class="hover:text-brand transition-colors">How it works</a>
         <a href="#pricing" class="hover:text-brand transition-colors">Pricing</a>
-        <a href="#contact" class="hover:text-brand transition-colors">Contact</a>
       </div>
-      <a href="#contact" class="bg-brand text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-brand-90 transition-colors">
-        Request demo
+      <a href="#contact" class="bg-brand text-white text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-brand-90 transition-colors shadow-sm">
+        Request demo →
       </a>
     </div>
   </nav>
 
   <!-- Hero -->
-  <section class="gradient-hero pt-32 pb-24 px-6 text-white">
-    <div class="max-w-4xl mx-auto text-center">
-      <span class="inline-block bg-white/10 border border-white/20 text-white/80 text-xs font-semibold px-3 py-1 rounded-full mb-6 tracking-wide uppercase">
-        Built for Indian Healthcare
-      </span>
-      <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
-        Healthcare management<br class="hidden md:block" />
-        <span class="text-green-300">that works for everyone</span>
-      </h1>
-      <p class="text-lg md:text-xl text-white/70 max-w-2xl mx-auto mb-10">
-        One platform for hospitals, diagnostics centres, and pharmacies.
-        OPD · Lab · Pharmacy · Billing · Analytics — configurable per deployment.
-      </p>
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a href="#contact" class="w-full sm:w-auto bg-white text-brand font-bold px-8 py-3.5 rounded-xl hover:bg-brand-10 transition-colors text-sm">
-          Request a free demo
-        </a>
-        <a href="#features" class="w-full sm:w-auto border border-white/30 text-white font-semibold px-8 py-3.5 rounded-xl hover:bg-white/10 transition-colors text-sm">
-          See features →
-        </a>
+  <section class="hero-bg min-h-screen flex items-center pt-16 pb-0 px-6 overflow-hidden relative">
+    <!-- Background glow -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-green-700/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-6xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center py-20">
+      <!-- Left: Copy -->
+      <div>
+        <span class="inline-flex items-center gap-2 glass text-white/80 text-xs font-semibold px-4 py-1.5 rounded-full mb-6">
+          <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+          Built for Indian Healthcare
+        </span>
+        <h1 class="text-5xl lg:text-6xl font-black text-white leading-[1.08] mb-6">
+          Healthcare<br/>management<br/><span class="gradient-text">that just works</span>
+        </h1>
+        <p class="text-white/60 text-lg leading-relaxed mb-8 max-w-md">
+          One platform for hospitals, diagnostics centres &amp; pharmacies.
+          White-label, cloud-hosted, India-first — live in 24 hours.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 mb-12">
+          <a href="#contact" class="inline-flex items-center justify-center gap-2 bg-white text-brand font-bold px-7 py-3.5 rounded-xl hover:bg-green-50 transition-colors text-sm shadow-lg">
+            Request a free demo
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+          <a href="#features" class="inline-flex items-center justify-center gap-2 glass text-white font-semibold px-7 py-3.5 rounded-xl hover:bg-white/10 transition-colors text-sm">
+            See features
+          </a>
+        </div>
+        <!-- Stats -->
+        <div class="grid grid-cols-3 gap-6 border-t border-white/10 pt-8">
+          <div><p class="text-2xl font-black text-white">10+</p><p class="text-white/50 text-xs mt-1">Modules</p></div>
+          <div><p class="text-2xl font-black text-white">24hr</p><p class="text-white/50 text-xs mt-1">Go-live time</p></div>
+          <div><p class="text-2xl font-black text-white">₹ INR</p><p class="text-white/50 text-xs mt-1">India-first billing</p></div>
+        </div>
+      </div>
+
+      <!-- Right: Product mockup -->
+      <div class="hidden lg:block animate-float">
+        <div class="rounded-2xl shadow-2xl overflow-hidden border border-white/10">
+          <div class="browser-bar">
+            <div class="dot bg-red-400"></div>
+            <div class="dot bg-yellow-400"></div>
+            <div class="dot bg-green-400"></div>
+            <div class="ml-3 flex-1 bg-white/10 rounded-md h-5 flex items-center px-3">
+              <span class="text-white/40 text-xs">medcore.app/dashboard</span>
+            </div>
+          </div>
+          <img
+            src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=85"
+            alt="MedCore dashboard preview"
+            class="w-full object-cover h-80"
+            onerror="this.style.display='none'"
+          />
+          <!-- Overlay stats on the image -->
+          <div class="bg-[#0d1f0e] px-5 py-4 grid grid-cols-3 gap-4 border-t border-white/5">
+            <div class="text-center"><p class="text-green-400 text-lg font-bold">24</p><p class="text-white/40 text-[10px] mt-0.5">Patients today</p></div>
+            <div class="text-center border-x border-white/10"><p class="text-white text-lg font-bold">₹48k</p><p class="text-white/40 text-[10px] mt-0.5">Revenue</p></div>
+            <div class="text-center"><p class="text-sky-400 text-lg font-bold">3</p><p class="text-white/40 text-[10px] mt-0.5">Lab pending</p></div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Stats -->
-    <div class="max-w-3xl mx-auto mt-20 grid grid-cols-2 md:grid-cols-4 gap-6">
-      <div class="text-center"><p class="text-2xl font-bold">10+</p><p class="text-white/60 text-sm mt-1">Modules</p></div>
-      <div class="text-center"><p class="text-2xl font-bold">Cloud</p><p class="text-white/60 text-sm mt-1">Hosted & managed</p></div>
-      <div class="text-center"><p class="text-2xl font-bold">White-label</p><p class="text-white/60 text-sm mt-1">Your brand</p></div>
-      <div class="text-center"><p class="text-2xl font-bold">India-first</p><p class="text-white/60 text-sm mt-1">₹ · GST · UHID</p></div>
+    <!-- Wave divider -->
+    <div class="absolute bottom-0 inset-x-0">
+      <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 60V30C360 0 720 60 1080 30C1260 15 1380 0 1440 0V60H0Z" fill="white"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Logos / Trust bar -->
+  <section class="bg-white py-10 px-6 border-b border-brand-10">
+    <div class="max-w-4xl mx-auto text-center">
+      <p class="text-xs font-semibold text-brand-60 uppercase tracking-widest mb-6">Designed for every type of practice</p>
+      <div class="flex flex-wrap items-center justify-center gap-10">
+        <span class="flex items-center gap-2 text-brand-60 text-sm font-semibold"><span class="text-xl">🏥</span> Hospitals</span>
+        <span class="text-brand-20">|</span>
+        <span class="flex items-center gap-2 text-brand-60 text-sm font-semibold"><span class="text-xl">🔬</span> Diagnostics</span>
+        <span class="text-brand-20">|</span>
+        <span class="flex items-center gap-2 text-brand-60 text-sm font-semibold"><span class="text-xl">💊</span> Pharmacies</span>
+        <span class="text-brand-20">|</span>
+        <span class="flex items-center gap-2 text-brand-60 text-sm font-semibold"><span class="text-xl">🩺</span> Clinics</span>
+        <span class="text-brand-20">|</span>
+        <span class="flex items-center gap-2 text-brand-60 text-sm font-semibold"><span class="text-xl">🧪</span> Path Labs</span>
+      </div>
     </div>
   </section>
 
   <!-- Features -->
-  <section id="features" class="bg-white py-24 px-6">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-14">
-        <h2 class="text-3xl md:text-4xl font-bold text-brand">Everything in one place</h2>
-        <p class="text-brand-60 mt-3 text-lg">Each module can be enabled or disabled per deployment.</p>
+  <section id="features" class="bg-white py-28 px-6">
+    <div class="max-w-6xl mx-auto section-fade">
+      <div class="text-center mb-16">
+        <span class="inline-block bg-brand-10 text-brand text-xs font-bold px-3 py-1 rounded-full mb-3 tracking-wide uppercase">All modules</span>
+        <h2 class="text-4xl font-black text-brand">Everything in one platform</h2>
+        <p class="text-brand-60 mt-3 text-lg max-w-xl mx-auto">Enable only what your practice needs. Each module works independently or together.</p>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
 
-        <!-- OPD -->
-        <div class="card-hover border border-brand-10 rounded-2xl p-6 bg-white">
-          <div class="w-10 h-10 rounded-xl bg-brand-10 flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <div class="card-hover border border-brand-10 rounded-2xl p-6 bg-white group">
+          <div class="w-11 h-11 rounded-xl bg-brand flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
           </div>
-          <h3 class="font-bold text-brand mb-2">OPD Management</h3>
-          <p class="text-sm text-brand-60 leading-relaxed">Patient registration, UHID generation, consultation queue, doctor notes, prescription, and visit history.</p>
+          <h3 class="font-bold text-brand mb-2 text-base">OPD Management</h3>
+          <p class="text-sm text-brand-60 leading-relaxed">Patient registration, UHID, consultation queue, doctor notes, prescriptions, and complete visit history.</p>
         </div>
 
-        <!-- Lab -->
         <div class="card-hover border border-brand-10 rounded-2xl p-6 bg-white">
-          <div class="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-sky-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3v11.5a3.5 3.5 0 007 0V3M6 3h12"/></svg>
+          <div class="w-11 h-11 rounded-xl bg-sky-500 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3v11.5a3.5 3.5 0 007 0V3M6 3h12"/></svg>
           </div>
-          <h3 class="font-bold text-brand mb-2">Lab Worklist</h3>
+          <h3 class="font-bold text-brand mb-2 text-base">Lab Worklist</h3>
           <p class="text-sm text-brand-60 leading-relaxed">Order tests, manage worklist, enter results, and generate printable lab reports with reference ranges.</p>
         </div>
 
-        <!-- Pharmacy -->
         <div class="card-hover border border-brand-10 rounded-2xl p-6 bg-white">
-          <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+          <div class="w-11 h-11 rounded-xl bg-amber-500 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
           </div>
-          <h3 class="font-bold text-brand mb-2">Pharmacy</h3>
-          <p class="text-sm text-brand-60 leading-relaxed">Drug master with 200+ NEML drugs, POS billing, stock management, expiry tracking, and profit reports.</p>
+          <h3 class="font-bold text-brand mb-2 text-base">Pharmacy</h3>
+          <p class="text-sm text-brand-60 leading-relaxed">200+ NEML drugs preloaded, POS billing, stock management, expiry tracking, and profit reports.</p>
         </div>
 
-        <!-- Billing -->
         <div class="card-hover border border-brand-10 rounded-2xl p-6 bg-white">
-          <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8h6m-5 0a3 3 0 110 6H9l3 3m-3-6h6m6 1a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <div class="w-11 h-11 rounded-xl bg-emerald-500 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8h6m-5 0a3 3 0 110 6H9l3 3m-3-6h6m6 1a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
           </div>
-          <h3 class="font-bold text-brand mb-2">Billing & Invoices</h3>
-          <p class="text-sm text-brand-60 leading-relaxed">OPD + Lab billing, payment modes (cash/UPI/card/insurance), pending collection tracking, printable invoices.</p>
+          <h3 class="font-bold text-brand mb-2 text-base">Billing & Invoices</h3>
+          <p class="text-sm text-brand-60 leading-relaxed">OPD + Lab billing, cash/UPI/card/insurance modes, pending collection tracking, printable invoices.</p>
         </div>
 
-        <!-- Analytics -->
         <div class="card-hover border border-brand-10 rounded-2xl p-6 bg-white">
-          <div class="w-10 h-10 rounded-xl bg-brand-10 flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          <div class="w-11 h-11 rounded-xl bg-brand-80 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
           </div>
-          <h3 class="font-bold text-brand mb-2">Analytics & Reports</h3>
-          <p class="text-sm text-brand-60 leading-relaxed">Revenue trends, profit margins, patient volumes, top tests, top drugs — with printable PDF reports.</p>
+          <h3 class="font-bold text-brand mb-2 text-base">Analytics & Reports</h3>
+          <p class="text-sm text-brand-60 leading-relaxed">Revenue trends, profit margins, patient volumes, top tests and drugs — with printable PDF reports.</p>
         </div>
 
-        <!-- Staff -->
         <div class="card-hover border border-brand-10 rounded-2xl p-6 bg-white">
-          <div class="w-10 h-10 rounded-xl bg-brand-10 flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-brand-60" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          <div class="w-11 h-11 rounded-xl bg-brand-60 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
           </div>
-          <h3 class="font-bold text-brand mb-2">Staff & Attendance</h3>
-          <p class="text-sm text-brand-60 leading-relaxed">Staff directory, daily attendance marking, monthly register, yearly summary, and role-based access control.</p>
+          <h3 class="font-bold text-brand mb-2 text-base">Staff & Attendance</h3>
+          <p class="text-sm text-brand-60 leading-relaxed">Staff directory, daily attendance, monthly register, yearly summary, role-based access control.</p>
         </div>
 
-        <!-- Inventory -->
         <div class="card-hover border border-brand-10 rounded-2xl p-6 bg-white">
-          <div class="w-10 h-10 rounded-xl bg-brand-10 flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-brand-60" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+          <div class="w-11 h-11 rounded-xl bg-brand-10 border border-brand-20 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
           </div>
-          <h3 class="font-bold text-brand mb-2">Inventory</h3>
-          <p class="text-sm text-brand-60 leading-relaxed">Track lab supplies, OPD consumables, housekeeping stock. Low-stock alerts, stock-in/out transactions, category reports.</p>
+          <h3 class="font-bold text-brand mb-2 text-base">Inventory</h3>
+          <p class="text-sm text-brand-60 leading-relaxed">Track lab supplies and consumables. Low-stock alerts, stock-in/out, category-wise reports.</p>
         </div>
 
-        <!-- Rate Card -->
         <div class="card-hover border border-brand-10 rounded-2xl p-6 bg-white">
-          <div class="w-10 h-10 rounded-xl bg-brand-10 flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-brand-60" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          <div class="w-11 h-11 rounded-xl bg-brand-10 border border-brand-20 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
           </div>
-          <h3 class="font-bold text-brand mb-2">Rate Card</h3>
-          <p class="text-sm text-brand-60 leading-relaxed">Manage consultation fees, lab test prices, and service charges. Auto-applies during billing for faster checkout.</p>
+          <h3 class="font-bold text-brand mb-2 text-base">Rate Card</h3>
+          <p class="text-sm text-brand-60 leading-relaxed">Manage fees, lab test prices, and service charges. Auto-applied during billing for faster checkout.</p>
         </div>
 
-        <!-- Dashboard -->
-        <div class="card-hover border border-brand-10 rounded-2xl p-6 bg-white">
-          <div class="w-10 h-10 rounded-xl bg-brand-10 flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"/></svg>
+        <div class="card-hover border border-brand-10 rounded-2xl p-6 bg-gradient-to-br from-brand to-brand-90 text-white">
+          <div class="w-11 h-11 rounded-xl bg-white/15 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"/></svg>
           </div>
-          <h3 class="font-bold text-brand mb-2">Live Dashboard</h3>
-          <p class="text-sm text-brand-60 leading-relaxed">Real-time KPIs, live OPD queue, shift snapshot, activity feed — everything at a glance the moment you log in.</p>
+          <h3 class="font-bold text-white mb-2 text-base">Live Dashboard</h3>
+          <p class="text-sm text-white/70 leading-relaxed">Real-time KPIs, live OPD queue, shift snapshot, activity feed — everything at a glance on login.</p>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- Who it's for -->
-  <section id="who" class="bg-[#F7EFE6] py-24 px-6">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-14">
-        <h2 class="text-3xl md:text-4xl font-bold text-brand">Built for every type of practice</h2>
+  <!-- Who it's for — with images -->
+  <section id="who" class="bg-[#F7EFE6] py-28 px-6">
+    <div class="max-w-6xl mx-auto section-fade">
+      <div class="text-center mb-16">
+        <span class="inline-block bg-white text-brand text-xs font-bold px-3 py-1 rounded-full mb-3 tracking-wide uppercase border border-brand-20">Who it's for</span>
+        <h2 class="text-4xl font-black text-brand">Built for every type of practice</h2>
         <p class="text-brand-60 mt-3 text-lg">Enable only the modules your practice needs.</p>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-        <div class="bg-white rounded-2xl p-8 border border-brand-20">
-          <div class="text-3xl mb-4">🏥</div>
-          <h3 class="text-xl font-bold text-brand mb-3">Hospitals & Clinics</h3>
-          <p class="text-brand-60 text-sm leading-relaxed mb-5">Full suite — OPD, Lab, Pharmacy, Billing, Staff, Inventory, Analytics. Everything connected in one platform.</p>
-          <div class="flex flex-wrap gap-2">
-            <span class="text-xs bg-brand-10 text-brand px-2.5 py-1 rounded-full font-medium">OPD</span>
-            <span class="text-xs bg-brand-10 text-brand px-2.5 py-1 rounded-full font-medium">Lab</span>
-            <span class="text-xs bg-brand-10 text-brand px-2.5 py-1 rounded-full font-medium">Pharmacy</span>
-            <span class="text-xs bg-brand-10 text-brand px-2.5 py-1 rounded-full font-medium">Billing</span>
-            <span class="text-xs bg-brand-10 text-brand px-2.5 py-1 rounded-full font-medium">Staff</span>
-            <span class="text-xs bg-brand-10 text-brand px-2.5 py-1 rounded-full font-medium">Analytics</span>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Hospital -->
+        <div class="img-card bg-white rounded-2xl overflow-hidden shadow-sm border border-brand-10 card-hover">
+          <div class="h-52 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=700&q=80"
+              alt="Hospital" class="w-full h-full object-cover"
+              onerror="this.parentElement.style.background='#E7EAE7'" />
+          </div>
+          <div class="p-6">
+            <span class="inline-block bg-brand-10 text-brand text-xs font-bold px-2.5 py-1 rounded-full mb-3">🏥 Hospitals & Clinics</span>
+            <h3 class="text-lg font-bold text-brand mb-2">Full suite — all connected</h3>
+            <p class="text-sm text-brand-60 leading-relaxed mb-4">OPD, Lab, Pharmacy, Billing, Staff, Inventory, Analytics — everything in one platform from day one.</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-xs bg-brand text-white px-2 py-0.5 rounded-full">OPD</span>
+              <span class="text-xs bg-brand text-white px-2 py-0.5 rounded-full">Lab</span>
+              <span class="text-xs bg-brand text-white px-2 py-0.5 rounded-full">Pharmacy</span>
+              <span class="text-xs bg-brand text-white px-2 py-0.5 rounded-full">Billing</span>
+              <span class="text-xs bg-brand text-white px-2 py-0.5 rounded-full">Staff</span>
+              <span class="text-xs bg-brand text-white px-2 py-0.5 rounded-full">Analytics</span>
+            </div>
           </div>
         </div>
 
-        <div class="bg-white rounded-2xl p-8 border border-sky-200">
-          <div class="text-3xl mb-4">🔬</div>
-          <h3 class="text-xl font-bold text-brand mb-3">Diagnostics Centres</h3>
-          <p class="text-brand-60 text-sm leading-relaxed mb-5">Lab-first setup — worklist, result entry, report printing, and billing. No OPD clutter.</p>
-          <div class="flex flex-wrap gap-2">
-            <span class="text-xs bg-sky-50 text-sky-700 px-2.5 py-1 rounded-full font-medium">Lab</span>
-            <span class="text-xs bg-sky-50 text-sky-700 px-2.5 py-1 rounded-full font-medium">Billing</span>
-            <span class="text-xs bg-sky-50 text-sky-700 px-2.5 py-1 rounded-full font-medium">Analytics</span>
-            <span class="text-xs bg-sky-50 text-sky-700 px-2.5 py-1 rounded-full font-medium">Inventory</span>
+        <!-- Diagnostics -->
+        <div class="img-card bg-white rounded-2xl overflow-hidden shadow-sm border border-sky-100 card-hover">
+          <div class="h-52 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=700&q=80"
+              alt="Diagnostics Lab" class="w-full h-full object-cover"
+              onerror="this.parentElement.style.background='#e0f2fe'" />
+          </div>
+          <div class="p-6">
+            <span class="inline-block bg-sky-50 text-sky-700 text-xs font-bold px-2.5 py-1 rounded-full mb-3">🔬 Diagnostics Centres</span>
+            <h3 class="text-lg font-bold text-brand mb-2">Lab-first setup</h3>
+            <p class="text-sm text-brand-60 leading-relaxed mb-4">Worklist, result entry, report printing, and billing. No OPD clutter — just what a diagnostics centre needs.</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-xs bg-sky-500 text-white px-2 py-0.5 rounded-full">Lab</span>
+              <span class="text-xs bg-sky-500 text-white px-2 py-0.5 rounded-full">Billing</span>
+              <span class="text-xs bg-sky-500 text-white px-2 py-0.5 rounded-full">Analytics</span>
+              <span class="text-xs bg-sky-500 text-white px-2 py-0.5 rounded-full">Inventory</span>
+            </div>
           </div>
         </div>
 
-        <div class="bg-white rounded-2xl p-8 border border-amber-200">
-          <div class="text-3xl mb-4">💊</div>
-          <h3 class="text-xl font-bold text-brand mb-3">Pharmacies</h3>
-          <p class="text-brand-60 text-sm leading-relaxed mb-5">POS billing, drug master, stock management, expiry alerts, and profit analytics. Purpose-built for retail pharmacy.</p>
-          <div class="flex flex-wrap gap-2">
-            <span class="text-xs bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full font-medium">Pharmacy</span>
-            <span class="text-xs bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full font-medium">Billing</span>
-            <span class="text-xs bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full font-medium">Inventory</span>
-            <span class="text-xs bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full font-medium">Analytics</span>
+        <!-- Pharmacy -->
+        <div class="img-card bg-white rounded-2xl overflow-hidden shadow-sm border border-amber-100 card-hover">
+          <div class="h-52 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&w=700&q=80"
+              alt="Pharmacy" class="w-full h-full object-cover"
+              onerror="this.parentElement.style.background='#fef3c7'" />
+          </div>
+          <div class="p-6">
+            <span class="inline-block bg-amber-50 text-amber-700 text-xs font-bold px-2.5 py-1 rounded-full mb-3">💊 Pharmacies</span>
+            <h3 class="text-lg font-bold text-brand mb-2">Purpose-built for retail</h3>
+            <p class="text-sm text-brand-60 leading-relaxed mb-4">POS billing, 200+ drug master, stock management, expiry alerts, and profit analytics built in.</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-xs bg-amber-500 text-white px-2 py-0.5 rounded-full">Pharmacy</span>
+              <span class="text-xs bg-amber-500 text-white px-2 py-0.5 rounded-full">Billing</span>
+              <span class="text-xs bg-amber-500 text-white px-2 py-0.5 rounded-full">Inventory</span>
+              <span class="text-xs bg-amber-500 text-white px-2 py-0.5 rounded-full">Analytics</span>
+            </div>
           </div>
         </div>
 
@@ -240,53 +321,69 @@
     </div>
   </section>
 
-  <!-- Why MedCore -->
-  <section class="bg-white py-24 px-6">
-    <div class="max-w-5xl mx-auto">
-      <div class="text-center mb-14">
-        <h2 class="text-3xl md:text-4xl font-bold text-brand">Why MedCore?</h2>
+  <!-- How it works -->
+  <section id="how" class="bg-white py-28 px-6">
+    <div class="max-w-4xl mx-auto section-fade text-center">
+      <span class="inline-block bg-brand-10 text-brand text-xs font-bold px-3 py-1 rounded-full mb-3 tracking-wide uppercase">Simple onboarding</span>
+      <h2 class="text-4xl font-black text-brand mb-4">Up and running in 24 hours</h2>
+      <p class="text-brand-60 text-lg mb-16">No IT team. No hardware. No installation. Just a URL.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+        <!-- Connector line -->
+        <div class="hidden md:block absolute top-8 left-1/6 right-1/6 h-0.5 bg-brand-10 z-0"></div>
+
+        <div class="relative z-10">
+          <div class="w-16 h-16 rounded-2xl bg-brand text-white text-2xl font-black flex items-center justify-center mx-auto mb-5 shadow-lg">1</div>
+          <h3 class="font-bold text-brand mb-2">Request demo</h3>
+          <p class="text-sm text-brand-60">Fill the form. We reach out within 24 hours to understand your requirements.</p>
+        </div>
+        <div class="relative z-10">
+          <div class="w-16 h-16 rounded-2xl bg-brand-80 text-white text-2xl font-black flex items-center justify-center mx-auto mb-5 shadow-lg">2</div>
+          <h3 class="font-bold text-brand mb-2">We set it up</h3>
+          <p class="text-sm text-brand-60">We deploy your instance, configure your modules, add your branding, and seed your data.</p>
+        </div>
+        <div class="relative z-10">
+          <div class="w-16 h-16 rounded-2xl bg-brand-60 text-white text-2xl font-black flex items-center justify-center mx-auto mb-5 shadow-lg">3</div>
+          <h3 class="font-bold text-brand mb-2">Go live</h3>
+          <p class="text-sm text-brand-60">Your staff gets login credentials. Training included. You're live and operational.</p>
+        </div>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <div class="flex gap-4">
-          <div class="w-10 h-10 rounded-xl bg-brand text-white flex items-center justify-center shrink-0 text-lg font-bold">✓</div>
-          <div>
-            <h4 class="font-bold text-brand mb-1">Cloud-hosted, zero setup</h4>
-            <p class="text-sm text-brand-60">We host and manage everything. You get a URL and start using it. No servers, no IT team needed.</p>
-          </div>
+    </div>
+  </section>
+
+  <!-- Why MedCore — image + points -->
+  <section class="bg-[#F7EFE6] py-28 px-6">
+    <div class="max-w-6xl mx-auto section-fade">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div class="rounded-2xl overflow-hidden shadow-xl img-card">
+          <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=800&q=85"
+            alt="Doctor using MedCore" class="w-full h-96 object-cover"
+            onerror="this.style.background='#E7EAE7'" />
         </div>
-        <div class="flex gap-4">
-          <div class="w-10 h-10 rounded-xl bg-brand text-white flex items-center justify-center shrink-0 text-lg font-bold">✓</div>
-          <div>
-            <h4 class="font-bold text-brand mb-1">White-label ready</h4>
-            <p class="text-sm text-brand-60">Your hospital's name and branding on the app, login page, and printed reports.</p>
-          </div>
-        </div>
-        <div class="flex gap-4">
-          <div class="w-10 h-10 rounded-xl bg-brand text-white flex items-center justify-center shrink-0 text-lg font-bold">✓</div>
-          <div>
-            <h4 class="font-bold text-brand mb-1">India-first design</h4>
-            <p class="text-sm text-brand-60">INR billing, UHID, Aadhaar-friendly forms, GST-ready invoices, and support for UPI / cash / card.</p>
-          </div>
-        </div>
-        <div class="flex gap-4">
-          <div class="w-10 h-10 rounded-xl bg-brand text-white flex items-center justify-center shrink-0 text-lg font-bold">✓</div>
-          <div>
-            <h4 class="font-bold text-brand mb-1">Role-based access</h4>
-            <p class="text-sm text-brand-60">Doctors, receptionists, lab technicians, pharmacists — each sees only what they need.</p>
-          </div>
-        </div>
-        <div class="flex gap-4">
-          <div class="w-10 h-10 rounded-xl bg-brand text-white flex items-center justify-center shrink-0 text-lg font-bold">✓</div>
-          <div>
-            <h4 class="font-bold text-brand mb-1">Works on mobile</h4>
-            <p class="text-sm text-brand-60">Fully responsive — nurses can mark attendance on a phone, doctors can review queues on a tablet.</p>
-          </div>
-        </div>
-        <div class="flex gap-4">
-          <div class="w-10 h-10 rounded-xl bg-brand text-white flex items-center justify-center shrink-0 text-lg font-bold">✓</div>
-          <div>
-            <h4 class="font-bold text-brand mb-1">Affordable subscription</h4>
-            <p class="text-sm text-brand-60">Flat monthly pricing. No per-user fees, no hidden charges, no expensive on-premise hardware.</p>
+        <div>
+          <span class="inline-block bg-white text-brand text-xs font-bold px-3 py-1 rounded-full mb-4 tracking-wide uppercase border border-brand-20">Why MedCore</span>
+          <h2 class="text-4xl font-black text-brand mb-8">Designed for the way Indian healthcare works</h2>
+          <div class="space-y-5">
+            <div class="flex gap-4">
+              <div class="w-8 h-8 rounded-lg bg-brand text-white flex items-center justify-center shrink-0 text-xs font-bold mt-0.5">✓</div>
+              <div><h4 class="font-bold text-brand mb-0.5">Cloud-hosted, zero setup</h4><p class="text-sm text-brand-60">We manage everything. You get a URL and you're live. No servers, no IT team.</p></div>
+            </div>
+            <div class="flex gap-4">
+              <div class="w-8 h-8 rounded-lg bg-brand text-white flex items-center justify-center shrink-0 text-xs font-bold mt-0.5">✓</div>
+              <div><h4 class="font-bold text-brand mb-0.5">White-label ready</h4><p class="text-sm text-brand-60">Your hospital name, logo, and city on the app, login page, and all printed reports.</p></div>
+            </div>
+            <div class="flex gap-4">
+              <div class="w-8 h-8 rounded-lg bg-brand text-white flex items-center justify-center shrink-0 text-xs font-bold mt-0.5">✓</div>
+              <div><h4 class="font-bold text-brand mb-0.5">India-first — ₹, UHID, GST, UPI</h4><p class="text-sm text-brand-60">INR billing, UHID generation, GST-ready invoices, Aadhaar-friendly, UPI/cash/card/insurance.</p></div>
+            </div>
+            <div class="flex gap-4">
+              <div class="w-8 h-8 rounded-lg bg-brand text-white flex items-center justify-center shrink-0 text-xs font-bold mt-0.5">✓</div>
+              <div><h4 class="font-bold text-brand mb-0.5">Works on any device</h4><p class="text-sm text-brand-60">Fully responsive — doctors on desktop, nurses on mobile, receptionists on tablet.</p></div>
+            </div>
+            <div class="flex gap-4">
+              <div class="w-8 h-8 rounded-lg bg-brand text-white flex items-center justify-center shrink-0 text-xs font-bold mt-0.5">✓</div>
+              <div><h4 class="font-bold text-brand mb-0.5">Affordable flat pricing</h4><p class="text-sm text-brand-60">No per-user fees, no hidden charges, no expensive hardware required.</p></div>
+            </div>
           </div>
         </div>
       </div>
@@ -294,136 +391,173 @@
   </section>
 
   <!-- Pricing -->
-  <section id="pricing" class="bg-[#F7EFE6] py-24 px-6">
-    <div class="max-w-5xl mx-auto">
-      <div class="text-center mb-14">
-        <h2 class="text-3xl md:text-4xl font-bold text-brand">Simple, transparent pricing</h2>
+  <section id="pricing" class="bg-white py-28 px-6">
+    <div class="max-w-5xl mx-auto section-fade">
+      <div class="text-center mb-16">
+        <span class="inline-block bg-brand-10 text-brand text-xs font-bold px-3 py-1 rounded-full mb-3 tracking-wide uppercase">Pricing</span>
+        <h2 class="text-4xl font-black text-brand">Simple, transparent pricing</h2>
         <p class="text-brand-60 mt-3 text-lg">All plans include hosting, updates, and support.</p>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
 
-        <!-- Basic -->
-        <div class="bg-white rounded-2xl p-8 border border-brand-20">
+        <div class="bg-white rounded-2xl p-8 border border-brand-10 card-hover">
           <p class="text-xs font-bold uppercase tracking-widest text-brand-60 mb-2">Basic</p>
-          <p class="text-4xl font-extrabold text-brand mb-1">₹2,999<span class="text-base font-normal text-brand-60">/mo</span></p>
-          <p class="text-sm text-brand-60 mb-6">For pharmacies & diagnostics</p>
+          <p class="text-4xl font-black text-brand mb-1">₹2,999<span class="text-base font-normal text-brand-60">/mo</span></p>
+          <p class="text-sm text-brand-60 mb-6">Pharmacies &amp; diagnostics</p>
           <ul class="space-y-3 text-sm text-brand-60 mb-8">
-            <li class="flex gap-2"><span class="text-brand font-bold">✓</span> Any 3 modules</li>
-            <li class="flex gap-2"><span class="text-brand font-bold">✓</span> Up to 5 users</li>
-            <li class="flex gap-2"><span class="text-brand font-bold">✓</span> Cloud hosting</li>
-            <li class="flex gap-2"><span class="text-brand font-bold">✓</span> Email support</li>
+            <li class="flex gap-2.5"><span class="text-brand font-bold">✓</span>Any 3 modules</li>
+            <li class="flex gap-2.5"><span class="text-brand font-bold">✓</span>Up to 5 users</li>
+            <li class="flex gap-2.5"><span class="text-brand font-bold">✓</span>Cloud hosting</li>
+            <li class="flex gap-2.5"><span class="text-brand font-bold">✓</span>Email support</li>
           </ul>
-          <a href="#contact" class="block text-center border border-brand text-brand font-semibold text-sm py-2.5 rounded-lg hover:bg-brand-10 transition-colors">Get started</a>
+          <a href="#contact" class="block text-center border-2 border-brand text-brand font-bold text-sm py-3 rounded-xl hover:bg-brand-10 transition-colors">Get started</a>
         </div>
 
-        <!-- Standard (highlighted) -->
-        <div class="bg-brand rounded-2xl p-8 border border-brand text-white relative">
-          <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-400 text-brand text-xs font-bold px-3 py-1 rounded-full">Most popular</span>
-          <p class="text-xs font-bold uppercase tracking-widest text-white/60 mb-2">Standard</p>
-          <p class="text-4xl font-extrabold mb-1">₹5,999<span class="text-base font-normal text-white/60">/mo</span></p>
-          <p class="text-sm text-white/60 mb-6">For hospitals & clinics</p>
+        <div class="bg-brand rounded-2xl p-8 relative card-hover shadow-2xl shadow-brand/30 -mt-4">
+          <span class="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-400 text-brand text-xs font-black px-4 py-1.5 rounded-full shadow">Most popular</span>
+          <p class="text-xs font-bold uppercase tracking-widest text-white/50 mb-2">Standard</p>
+          <p class="text-4xl font-black text-white mb-1">₹5,999<span class="text-base font-normal text-white/50">/mo</span></p>
+          <p class="text-sm text-white/60 mb-6">Hospitals &amp; clinics</p>
           <ul class="space-y-3 text-sm text-white/80 mb-8">
-            <li class="flex gap-2"><span class="text-green-400 font-bold">✓</span> All modules</li>
-            <li class="flex gap-2"><span class="text-green-400 font-bold">✓</span> Up to 20 users</li>
-            <li class="flex gap-2"><span class="text-green-400 font-bold">✓</span> Custom branding</li>
-            <li class="flex gap-2"><span class="text-green-400 font-bold">✓</span> Priority support</li>
-            <li class="flex gap-2"><span class="text-green-400 font-bold">✓</span> Daily backups</li>
+            <li class="flex gap-2.5"><span class="text-green-400 font-bold">✓</span>All modules</li>
+            <li class="flex gap-2.5"><span class="text-green-400 font-bold">✓</span>Up to 20 users</li>
+            <li class="flex gap-2.5"><span class="text-green-400 font-bold">✓</span>Custom branding</li>
+            <li class="flex gap-2.5"><span class="text-green-400 font-bold">✓</span>Priority support</li>
+            <li class="flex gap-2.5"><span class="text-green-400 font-bold">✓</span>Daily backups</li>
           </ul>
-          <a href="#contact" class="block text-center bg-white text-brand font-bold text-sm py-2.5 rounded-lg hover:bg-brand-10 transition-colors">Get started</a>
+          <a href="#contact" class="block text-center bg-white text-brand font-black text-sm py-3 rounded-xl hover:bg-green-50 transition-colors">Get started</a>
         </div>
 
-        <!-- Enterprise -->
-        <div class="bg-white rounded-2xl p-8 border border-brand-20">
+        <div class="bg-white rounded-2xl p-8 border border-brand-10 card-hover">
           <p class="text-xs font-bold uppercase tracking-widest text-brand-60 mb-2">Enterprise</p>
-          <p class="text-4xl font-extrabold text-brand mb-1">Custom</p>
-          <p class="text-sm text-brand-60 mb-6">For large hospitals & chains</p>
+          <p class="text-4xl font-black text-brand mb-1">Custom</p>
+          <p class="text-sm text-brand-60 mb-6">Large hospitals &amp; chains</p>
           <ul class="space-y-3 text-sm text-brand-60 mb-8">
-            <li class="flex gap-2"><span class="text-brand font-bold">✓</span> Unlimited users</li>
-            <li class="flex gap-2"><span class="text-brand font-bold">✓</span> Custom features</li>
-            <li class="flex gap-2"><span class="text-brand font-bold">✓</span> Dedicated server</li>
-            <li class="flex gap-2"><span class="text-brand font-bold">✓</span> On-site training</li>
-            <li class="flex gap-2"><span class="text-brand font-bold">✓</span> SLA guarantee</li>
+            <li class="flex gap-2.5"><span class="text-brand font-bold">✓</span>Unlimited users</li>
+            <li class="flex gap-2.5"><span class="text-brand font-bold">✓</span>Custom features</li>
+            <li class="flex gap-2.5"><span class="text-brand font-bold">✓</span>Dedicated server</li>
+            <li class="flex gap-2.5"><span class="text-brand font-bold">✓</span>On-site training</li>
+            <li class="flex gap-2.5"><span class="text-brand font-bold">✓</span>SLA guarantee</li>
           </ul>
-          <a href="#contact" class="block text-center border border-brand text-brand font-semibold text-sm py-2.5 rounded-lg hover:bg-brand-10 transition-colors">Contact us</a>
+          <a href="#contact" class="block text-center border-2 border-brand text-brand font-bold text-sm py-3 rounded-xl hover:bg-brand-10 transition-colors">Contact us</a>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- Contact / CTA -->
-  <section id="contact" class="gradient-hero py-24 px-6 text-white">
-    <div class="max-w-2xl mx-auto text-center">
-      <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to get started?</h2>
-      <p class="text-white/70 text-lg mb-10">Request a free demo and we'll set up a live instance for your practice within 24 hours.</p>
-      <form class="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-8 text-left space-y-4"
-        onsubmit="handleSubmit(event)">
+  <!-- Contact -->
+  <section id="contact" class="hero-bg py-28 px-6 relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-green-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="max-w-2xl mx-auto relative z-10">
+      <div class="text-center mb-10">
+        <h2 class="text-4xl font-black text-white mb-4">Ready to get started?</h2>
+        <p class="text-white/60 text-lg">We'll set up a live instance for your practice within 24 hours. Free.</p>
+      </div>
+      <form id="contact-form" class="glass rounded-2xl p-8 space-y-4" onsubmit="handleSubmit(event)">
+        <input type="hidden" name="access_key" value="33b00a7f-4031-4eba-962d-3b3416b780b1" />
+        <input type="hidden" name="subject" value="New demo request — MedCore" />
+        <input type="hidden" name="from_name" value="MedCore Website" />
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label class="block text-xs font-semibold text-white/70 mb-1.5">Your name</label>
-            <input type="text" required placeholder="Dr. Rajesh Kumar"
-              class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2.5 text-sm text-white placeholder-white/40 outline-none focus:border-white/50" />
+            <label class="block text-xs font-semibold text-white/60 mb-1.5">Your name *</label>
+            <input type="text" name="name" required placeholder="Dr. Rajesh Kumar"
+              class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-white/50 transition-colors" />
           </div>
           <div>
-            <label class="block text-xs font-semibold text-white/70 mb-1.5">Phone / WhatsApp</label>
-            <input type="tel" required placeholder="+91 XXXXX XXXXX"
-              class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2.5 text-sm text-white placeholder-white/40 outline-none focus:border-white/50" />
+            <label class="block text-xs font-semibold text-white/60 mb-1.5">Phone / WhatsApp *</label>
+            <input type="tel" name="phone" required placeholder="+91 XXXXX XXXXX"
+              class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-white/50 transition-colors" />
           </div>
         </div>
         <div>
-          <label class="block text-xs font-semibold text-white/70 mb-1.5">Practice / Hospital name</label>
-          <input type="text" required placeholder="City General Hospital"
-            class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2.5 text-sm text-white placeholder-white/40 outline-none focus:border-white/50" />
+          <label class="block text-xs font-semibold text-white/60 mb-1.5">Practice / Hospital name *</label>
+          <input type="text" name="practice" required placeholder="City General Hospital"
+            class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-white/50 transition-colors" />
         </div>
         <div>
-          <label class="block text-xs font-semibold text-white/70 mb-1.5">Type of practice</label>
-          <select required class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2.5 text-sm text-white outline-none focus:border-white/50">
-            <option value="" class="text-brand">Select...</option>
-            <option value="hospital" class="text-brand">Hospital / Clinic</option>
-            <option value="diagnostics" class="text-brand">Diagnostics Centre</option>
-            <option value="pharmacy" class="text-brand">Pharmacy</option>
-            <option value="other" class="text-brand">Other</option>
+          <label class="block text-xs font-semibold text-white/60 mb-1.5">Type of practice *</label>
+          <select name="type" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-white/50 transition-colors">
+            <option value="" class="text-brand bg-white">Select type...</option>
+            <option value="Hospital / Clinic" class="text-brand bg-white">Hospital / Clinic</option>
+            <option value="Diagnostics Centre" class="text-brand bg-white">Diagnostics Centre</option>
+            <option value="Pharmacy" class="text-brand bg-white">Pharmacy</option>
+            <option value="Other" class="text-brand bg-white">Other</option>
           </select>
         </div>
-        <button type="submit"
-          class="w-full bg-white text-brand font-bold py-3 rounded-xl hover:bg-brand-10 transition-colors text-sm">
+        <button type="submit" id="submit-btn"
+          class="w-full bg-white text-brand font-black py-3.5 rounded-xl hover:bg-green-50 transition-colors text-sm shadow-lg mt-2">
           Request free demo →
         </button>
-        <p class="text-center text-xs text-white/50">We'll reach out within 24 hours. No spam, ever.</p>
+        <p id="form-msg" class="hidden text-center text-sm font-medium text-green-300">✓ Request sent! We'll reach out within 24 hours.</p>
+        <p class="text-center text-xs text-white/40">We'll reach out within 24 hours. No spam, ever.</p>
       </form>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="bg-brand py-10 px-6 text-white/60">
-    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-      <div class="flex items-center gap-2.5">
-        <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-white/10">
-          <svg viewBox="0 0 32 32" class="w-4 h-4" fill="none">
-            <polyline points="2,16 7,16 9,13 11,16 13,16 15,5 17,27 19,16 21,12 24,16 30,16"
-              stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-        <span class="font-bold text-white text-sm">MedCore</span>
+  <footer class="bg-[#021505] py-12 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex flex-col md:flex-row items-start justify-between gap-10 mb-10">
+        <div>
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-80">
+              <svg viewBox="0 0 32 32" class="w-5 h-5" fill="none">
+                <polyline points="2,16 7,16 9,13 11,16 13,16 15,5 17,27 19,16 21,12 24,16 30,16" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="font-bold text-white">MedCore</span>
+          </div>
+          <p class="text-white/40 text-sm max-w-xs leading-relaxed">Modern healthcare management for Indian hospitals, diagnostics centres, and pharmacies.</p>
+        </div>
+        <div class="grid grid-cols-2 gap-x-16 gap-y-3 text-sm">
+          <a href="#features" class="text-white/50 hover:text-white transition-colors">Features</a>
+          <a href="#who" class="text-white/50 hover:text-white transition-colors">Who it's for</a>
+          <a href="#how" class="text-white/50 hover:text-white transition-colors">How it works</a>
+          <a href="#pricing" class="text-white/50 hover:text-white transition-colors">Pricing</a>
+          <a href="#contact" class="text-white/50 hover:text-white transition-colors">Contact</a>
+        </div>
       </div>
-      <p class="text-xs text-center">Modern healthcare management for Indian practices · © 2026 MedCore</p>
-      <div class="flex gap-5 text-xs">
-        <a href="#features" class="hover:text-white transition-colors">Features</a>
-        <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
-        <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+      <div class="border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <p class="text-white/30 text-xs">© 2026 MedCore. Modern healthcare management for Indian practices.</p>
+        <p class="text-white/20 text-xs">Made with ♥ in India</p>
       </div>
     </div>
   </footer>
 
   <script>
-    function handleSubmit(e) {
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') })
+    }, { threshold: 0.1 })
+    document.querySelectorAll('.section-fade').forEach(el => observer.observe(el))
+
+    // Form submit
+    async function handleSubmit(e) {
       e.preventDefault()
-      const btn = e.target.querySelector('button[type="submit"]')
-      btn.textContent = '✓ Request sent! We\'ll contact you shortly.'
+      const btn = document.getElementById('submit-btn')
+      const msg = document.getElementById('form-msg')
+      btn.textContent = 'Sending…'
       btn.disabled = true
-      btn.classList.add('opacity-75')
+
+      const data = new FormData(e.target)
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: data
+      })
+      const json = await res.json()
+
+      if (json.success) {
+        e.target.reset()
+        msg.classList.remove('hidden')
+        btn.textContent = 'Request sent!'
+        btn.classList.add('opacity-75', 'cursor-not-allowed')
+      } else {
+        btn.textContent = 'Request free demo →'
+        btn.disabled = false
+        alert('Something went wrong. Please try again.')
+      }
     }
   </script>
-
 </body>
 </html>
